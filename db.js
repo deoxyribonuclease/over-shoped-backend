@@ -1,2 +1,7 @@
-const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database('./shop.db');
+const { Sequelize } = require('sequelize');
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './shop.db' // SQLite file location
+});
+
+module.exports = sequelize;
