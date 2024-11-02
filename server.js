@@ -1,12 +1,19 @@
 const express = require('express');
+const cors = require('cors');
 const sequelize = require('./db');
 const app = express();
 
-const userRoute = require('./routes/userRoutes');
+app.use(cors());
 
 app.use(express.json());
 
+const userRoute = require('./routes/userRoutes');
+const authRoute = require('./routes/authRoutes');
+const productRoute = require('./routes/productRoutes');
+
 app.use('/users', userRoute);
+app.use('/auth', authRoute);
+app.use('/products', productRoute);
 
 sequelize.sync()
     .then(() => {

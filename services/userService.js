@@ -9,17 +9,21 @@ const get = async (id) => {
         return await User.findByPk(id);
 }
 
+const getByEmail = async (email) => {
+    return await User.findOne({ where: { email: email }});
+}
+
 const add = async (userData) => {
     const { name, surname,  email, password, address, phone, image } = userData;
-        return await User.create({ 
-            name,
-            surname, 
-            email, 
-            password, 
-            address, 
-            phone,
-            image
-        });
+    return await User.create({ 
+        name,
+        surname, 
+        email, 
+        password, 
+        address, 
+        phone,
+        image
+    });
 };
 
 const update = async (id, userData) => {
@@ -51,4 +55,4 @@ const del = async (id) => {
         return false;
 };
 
-module.exports = {getAll, get, add, update, del};
+module.exports = {getAll, get, add, update, del, getByEmail};

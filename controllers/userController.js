@@ -52,20 +52,14 @@ const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, password, address, phone } = req.body;
     const image = req.file ? req.file.buffer : null;
-
     try {
-        console.log('Updating user with ID:', id);
-        console.log('Data received:', { name, email, password, address, phone, image });
-        
         const updatedUser = await userService.update(id, { name, email, password, address, phone, image });
-        
         if (updatedUser) {
             res.status(200).json(updatedUser);
         } else {
             res.status(404).json({ error: 'User not found' });
         }
     } catch (error) {
-        console.error('Error updating user:', error.message);
         res.status(500).json({ error: `Failed to update user because ${error.message}` });
     }
 };
