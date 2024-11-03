@@ -1,16 +1,20 @@
 const { Sequelize } = require('sequelize');
 const Product = require('../models/product');
 
-const getAll = async () => {
-    return await Product.findAll();
-}
+const getAllPaginated = async (page, limit) => {
+    const offset = (page - 1) * limit;
+    return await Product.findAndCountAll({
+        offset,
+        limit,
+    });
+};
 
 const get = async (id) => {
     return await Product.findByPk(id);
-}
+};
 
 const add = async (productData) => {
-    const { name, description, price, discountPercentage, images} = productData;
+    const { name, description, price, discountPercentage, images } = productData;
     return await Product.create({
         name,
         description,
@@ -18,10 +22,10 @@ const add = async (productData) => {
         discountPercentage,
         images
     });
-}
+};
 
 const update = async (id, productData) => {
-    const { name, description, price, discountPercentage} = productData;
+    const { name, description, price, discountPercentage, images } = productData;
     const product = await Product.findByPk(id);
     if (product) {
         product.name = name || product.name;
@@ -29,11 +33,11 @@ const update = async (id, productData) => {
         product.price = price || product.price;
         product.discountPercentage = discountPercentage || product.discountPercentage;
         product.images = images || product.images;
-        await product.save()
+        await product.save();
         return product;
-    } 
+    }
     return null;
-}
+};
 
 const del = async (id) => {
     const product = await Product.findByPk(id);
@@ -42,7 +46,7 @@ const del = async (id) => {
         return true;
     }
     return false;
-}
+};
 
 const getImages = async (id) => {
     const product = await Product.findByPk(id);
@@ -52,4 +56,4 @@ const getImages = async (id) => {
     return null;
 };
 
-module.exports = {getAll, get, add, update, del, getImages}
+module.exports = { getAllPaginated, get, add, update, del, getImages };
