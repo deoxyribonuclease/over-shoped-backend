@@ -23,7 +23,7 @@ const getUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({error: `Failed to get user: ${error.message}`});
     }
-}
+};
 
 const createUser = async (req, res) => {
     const { name, surname, email, password, address, phone } = req.body;

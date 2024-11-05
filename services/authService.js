@@ -1,8 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const nodemailer = require("nodemailer");
 const userService = require('../services/userService')
-const config = require('../config');
+const { jwtSecret, email, pass } = require('../config');
 
 const register = async (email, password) => {
     try {
@@ -20,7 +21,7 @@ const register = async (email, password) => {
     } catch (error) {
         return { error: `Server error: ${error.message}` };
     }
-}
+};
 
 const login = async (email, password) => {
     try {
@@ -40,11 +41,37 @@ const login = async (email, password) => {
             }
         };
 
-        const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '1h' });
+        const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
         return { token };
     } catch (error) {
         return { error: `Server error: ${error.message}` };
     }
-}
+};
 
-module.exports = { register, login };
+const sendEmail = async (email, subject, text) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.HOST,
+      service: process.env.SERVICE,
+      port: 587,
+      secure: true,
+      auth: {
+        user: email,
+        pass: pass,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.USER,
+      to: email,
+      subject: subject,
+      text: text,
+    });
+    console.log("email sent sucessfully");
+  } catch (error) {
+    console.log("email not sent");
+    console.log(error);
+  }
+};
+
+module.exports = { register, login, sendEmail};

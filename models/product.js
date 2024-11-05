@@ -27,25 +27,22 @@ const Product = sequelize.define('Product', {
         defaultValue: 0,
         allowNull: true
     },
-    catehory: {
+    category: {
         type: DataTypes.STRING,
         allowNull: true
     },
     images: {
         type: DataTypes.JSON, 
         allowNull: true
-    }
-  /*  shopId: {
+    },
+    shopId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Shops',
             key: 'id'
         }
-    } */
+    }
 });
-
-// Shop.hasMany(Product, { foreignKey: 'shopId' });
-// Product.belongsTo(Shop, { foreignKey: 'shopId' });
 
 module.exports = Product;

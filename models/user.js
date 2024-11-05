@@ -23,6 +23,11 @@ const User = sequelize.define('User', {
         type: DataTypes.BLOB('long'),
         allowNull: true
     },
+    verified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
+    },
     address: DataTypes.STRING,
     phone: DataTypes.STRING
 });
