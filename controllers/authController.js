@@ -5,7 +5,7 @@ const registerUser = async (req, res) => {
     const { email, password } = req.body;
     try {
         const result = await authService.register(email, password);
-        res.status(201).json({ message: result });
+        res.status(201).json(result);
     } catch (error) {
         res.status(500).send(`Server error: ${error.message}`);
     }

@@ -16,7 +16,8 @@ app.use('/users', userRoute);
 app.use('/auth', authRoute);
 app.use('/products', productRoute);
 
-sequelize.sync()
+// remove { force : true } to cancel db flush
+sequelize.sync({ force: true })
     .then(() => {
         console.log('Database & tables created!');
     })
@@ -29,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 // Start the server
-const { port } = require('./config');
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+const { ip, port } = require('./config');
+app.listen(port, ip, () => {
+    console.log(`Server is running on: ${ip}:${port}`);
 });

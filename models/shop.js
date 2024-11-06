@@ -6,6 +6,14 @@ const Shop = sequelize.define('Shop', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    userId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'User',
+            key: 'id'
+        },
+        onDelete: 'CASCADE'
+    },
     description: {
         type: DataTypes.STRING,
         allowNull: false

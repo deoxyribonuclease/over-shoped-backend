@@ -6,19 +6,18 @@ const Favorite = sequelize.define('Favorite', {
         type: DataTypes.INTEGER,
         references: {
             model: 'User',
-            key: id
-        }
+            key: 'id'
+        },
+        onDelete: 'CASCADE',
     },
     productId : {
         type: DataTypes.INTEGER,
         references: {
             model: 'Product',
-            key: id
-        }
-    }
+            key: 'id'
+        },
+        onDelete: 'CASCADE',
+    },
 }); 
-
-Favorite.belongsTo('User', { foreignKey: 'shopId' });
-User.hasMany('Favorite', { foreignKey: 'shopId' });
 
 module.exports = Favorite;
