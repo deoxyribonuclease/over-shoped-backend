@@ -1,4 +1,3 @@
-const { Sequelize } = require('sequelize');
 const productService = require('../services/productService');
 
 const getAllProducts = async (req, res) => {
@@ -51,8 +50,8 @@ const updateProduct = async (req, res) => {
             discountPercetnage,
             images
         });
-        if (updateProduct) {
-            res.status(200).json(updateProduct);
+        if (updatedProduct) {
+            res.status(200).json(updatedProduct);
         } else {
             res.status(404).json({ error: 'Product not found'});
         }

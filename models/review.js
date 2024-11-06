@@ -8,21 +8,29 @@ const Review = sequelize.define('Review', {
             model: 'Product',
             key: 'id'
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'User',
-                key: 'id'
-            },
-            allowNull: true
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'User',
+            key: 'id'
         },
-        text: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        rating: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-    }
+        allowNull: true
+    },
+    indexes: [
+        {
+            unique: true,
+            fields: ['userId', 'productId']
+        }
+    ],
+    text: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    rating: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 });
+
+module.exports = Review;
