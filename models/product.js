@@ -24,7 +24,7 @@ const Product = sequelize.define('Product', {
         allowNull: false,
         validate: {
             min: 0,
-          },
+        },
     },
     discountPercentage: {
         type: DataTypes.INTEGER,
@@ -41,7 +41,7 @@ const Product = sequelize.define('Product', {
         allowNull: true
     },
     images: {
-        type: DataTypes.JSON, 
+        type: DataTypes.JSON,
         allowNull: true
     },
     rating: {

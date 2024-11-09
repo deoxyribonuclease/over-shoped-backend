@@ -6,7 +6,7 @@ const getAllUsers = async (req, res) => {
         const users = await userService.getAll();
         res.status(200).json(users);
     } catch (error) {
-        res.status(500).json({ error: `Failed to retrieve users: ${error.message}`});
+        res.status(500).json({ error: `Failed to retrieve users: ${error.message}` });
     }
 };
 
@@ -18,10 +18,10 @@ const getUser = async (req, res) => {
             res.status(200).json(user);
         }
         else {
-            res.status(404).json({error: 'User not found'});
+            res.status(404).json({ error: 'User not found' });
         }
     } catch (error) {
-        res.status(500).json({error: `Failed to get user: ${error.message}`});
+        res.status(500).json({ error: `Failed to get user: ${error.message}` });
     }
 };
 
@@ -29,19 +29,19 @@ const createUser = async (req, res) => {
     const { name, surname, email, password, address, phone } = req.body;
     const image = req.file ? req.file.buffer : null;
     try {
-        const newUser = await userService.add({ 
+        const newUser = await userService.add({
             name,
-            surname, 
-            email, 
-            password, 
-            address, 
+            surname,
+            email,
+            password,
+            address,
             phone,
             image
         });
         res.status(201).json(newUser);
     } catch (error) {
         if (error instanceof Sequelize.UniqueConstraintError) {
-            res.status(500).json({error: `User already exists: ${error.message}`});
+            res.status(500).json({ error: `User already exists: ${error.message}` });
         } else {
             res.status(500).json({ error: `Server error: ${error.message}` });
         }
@@ -71,10 +71,10 @@ const deleteUser = async (req, res) => {
             res.status(204).json();
         }
         else {
-            res.status(404).json({error: 'User not found'});
+            res.status(404).json({ error: 'User not found' });
         }
     } catch (error) {
-        res.status(500).json({error: `Failed to delete user: ${error.message}`})
+        res.status(500).json({ error: `Failed to delete user: ${error.message}` })
     }
 };
 
@@ -84,7 +84,7 @@ const getUserImage = async (req, res) => {
         const user = await userService.get(id);
         if (!user) {
             res.status(404).json({ error: 'User not found' });
-        } 
+        }
         else if (!user.image) {
             res.status(404).json({ error: 'Image not found' });
         }
@@ -97,4 +97,4 @@ const getUserImage = async (req, res) => {
     }
 };
 
-module.exports = {getAllUsers, getUser, createUser, updateUser, deleteUser, getUserImage};
+module.exports = { getAllUsers, getUser, createUser, updateUser, deleteUser, getUserImage };

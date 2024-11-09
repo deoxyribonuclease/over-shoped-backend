@@ -1,28 +1,28 @@
-const { Sequelize } = require('sequelize');
-const User = require('../models/user');
+const { Sequelize } = require("sequelize");
+const User = require("../models/user");
 
 const getAll = async () => {
-        return await User.findAll();
+    return await User.findAll();
 };
 
 const get = async (id) => {
-        return await User.findByPk(id);
-}
+    return await User.findByPk(id);
+};
 
 const getByEmail = async (email) => {
-    return await User.findOne({ where: { email: email }});
-}
+    return await User.findOne({ where: { email: email } });
+};
 
 const add = async (userData) => {
-    const { name, surname,  email, password, address, phone, image } = userData;
-    return await User.create({ 
+    const { name, surname, email, password, address, phone, image } = userData;
+    return await User.create({
         name,
-        surname, 
-        email, 
-        password, 
-        address, 
+        surname,
+        email,
+        password,
+        address,
         phone,
-        image
+        image,
     });
 };
 
@@ -39,7 +39,7 @@ const update = async (id, userData) => {
         if (image !== null) {
             user.image = image;
         }
-        
+
         await user.save();
         return user;
     }
@@ -47,12 +47,12 @@ const update = async (id, userData) => {
 };
 
 const del = async (id) => {
-        const user = await User.findByPk(id);
-        if (user) {
-            await user.destroy();
-            return true;
-        }
-        return false;
+    const user = await User.findByPk(id);
+    if (user) {
+        await user.destroy();
+        return true;
+    }
+    return false;
 };
 
-module.exports = {getAll, get, add, update, del, getByEmail};
+module.exports = { getAll, get, add, update, del, getByEmail };

@@ -25,14 +25,17 @@ const add = async (productData) => {
 };
 
 const update = async (id, productData) => {
-    const { name, description, price, discountPercentage, images } = productData;
+    const { name, description, price, discountPercentage, stock, category, images, rating } = productData;
     const product = await Product.findByPk(id);
     if (product) {
         product.name = name || product.name;
         product.description = description || product.description;
         product.price = price || product.price;
         product.discountPercentage = discountPercentage || product.discountPercentage;
+        product.stock = stock || product.stock;
+        product.category = category || product.category;
         product.images = images || product.images;
+        product.rating = rating || product.rating;
         await product.save();
         return product;
     }
@@ -56,4 +59,4 @@ const getImages = async (id) => {
     return null;
 };
 
-module.exports = { getAllPaginated, get, add, update, del, getImages };
+module.exports = { getAllPaginated, get, add, update, del, getImages }

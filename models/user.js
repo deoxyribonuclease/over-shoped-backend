@@ -24,7 +24,7 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    image : {
+    image: {
         type: DataTypes.BLOB('long'),
         allowNull: true
     },

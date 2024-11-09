@@ -17,7 +17,7 @@ const Order = sequelize.define('Order', {
         defaultValue: 'На розгляді',
     },
     grandTotal: {
-        type: DataTypes.DECIMAL(10,2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
     shipping: {

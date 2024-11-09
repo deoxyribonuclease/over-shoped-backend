@@ -8,16 +8,18 @@ const Favorite = sequelize.define('Favorite', {
             model: 'Users',
             key: 'id'
         },
+        primaryKey: true,
         onDelete: 'CASCADE',
     },
-    productId : {
+    productId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'Products',
             key: 'id'
         },
+        primaryKey: true,
         onDelete: 'CASCADE',
-    },
-}); 
+    }
+});
 
 module.exports = Favorite;

@@ -11,16 +11,15 @@ app.use(express.urlencoded({ limit: '1000mb', extended: true }));
 const userRoute = require('./routes/userRoutes');
 const authRoute = require('./routes/authRoutes');
 const productRoute = require('./routes/productRoutes');
-
 const reviewRoute = require('./routes/reviewRoutes');
-//const favoriteRoute = require('./routes/favoriteRoutes');
+const favoriteRoute = require('./routes/favoriteRoutes');
 
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
 app.use('/products', productRoute);
 
 app.use('/reviews', reviewRoute);
-//app.use('/favorites', favoriteRoute);
+app.use('/favorites', favoriteRoute);
 
 // remove { force : true } to cancel db flush
 sequelize.sync({ force: true })

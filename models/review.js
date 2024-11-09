@@ -18,12 +18,6 @@ const Review = sequelize.define('Review', {
         },
         primaryKey: true
     },
-    indexes: [
-        {
-            unique: true,
-            fields: ['userId', 'productId']
-        }
-    ],
     text: {
         type: DataTypes.STRING,
         allowNull: false
