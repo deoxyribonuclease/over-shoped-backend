@@ -58,7 +58,7 @@ const createReview = async (req, res, next) => {
       text,
       rating,
     });
-    if(newReview) {
+    if (newReview) {
 
     } else {
       res.status(409).json({ message: 'Review already exists' });

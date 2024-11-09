@@ -13,6 +13,7 @@ const authRoute = require('./routes/authRoutes');
 const productRoute = require('./routes/productRoutes');
 const reviewRoute = require('./routes/reviewRoutes');
 const favoriteRoute = require('./routes/favoriteRoutes');
+const shopRoute = require('./routes/shopRoutes');
 
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
@@ -20,6 +21,7 @@ app.use('/products', productRoute);
 
 app.use('/reviews', reviewRoute);
 app.use('/favorites', favoriteRoute);
+app.use('/shops', shopRoute);
 
 // remove { force : true } to cancel db flush
 sequelize.sync({ force: true })

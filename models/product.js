@@ -2,15 +2,15 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
 const Product = sequelize.define('Product', {
-    // shopId: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: true,
-    //     references: {
-    //         model: 'Shop',
-    //         key: 'id'
-    //     },
-    //     onDelete: 'CASCADE'
-    // },
+    shopId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'Shops',
+            key: 'id'
+        },
+        onDelete: 'CASCADE'
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false
