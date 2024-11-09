@@ -9,7 +9,7 @@ const Shop = sequelize.define('Shop', {
     userId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'User',
+            model: 'Users',
             key: 'id'
         },
         onDelete: 'CASCADE'

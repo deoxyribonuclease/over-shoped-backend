@@ -5,7 +5,7 @@ const Favorite = sequelize.define('Favorite', {
     userId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'User',
+            model: 'Users',
             key: 'id'
         },
         onDelete: 'CASCADE',
@@ -13,7 +13,7 @@ const Favorite = sequelize.define('Favorite', {
     productId : {
         type: DataTypes.INTEGER,
         references: {
-            model: 'Product',
+            model: 'Products',
             key: 'id'
         },
         onDelete: 'CASCADE',

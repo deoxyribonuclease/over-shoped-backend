@@ -3,7 +3,9 @@ const router = express.Router();
 
 const reviewController = require('../controllers/reviewController');
 
-// TO-DO make chaining using next() when adding new review to order to update order's average rating
+router.get('/user/:id', reviewController.getReviewsByUser);
+
+router.get('/product/:id', reviewController.getReviewsByProduct);
 
 router.route('/:userId/:productId')
     .get(reviewController.getReviewByUserAndProduct)
@@ -11,9 +13,5 @@ router.route('/:userId/:productId')
     .delete(reviewController.deleteReviewByUserAndProduct);
 
 router.post('/', reviewController.createReview);
-
-router.get('/user/id', reviewController.getReviewsByUser);
-
-router.get('/product/id', reviewController.getReviewsByUser);
 
 module.exports = router;

@@ -5,17 +5,18 @@ const Review = sequelize.define('Review', {
     productId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'Product',
+            model: 'Products',
             key: 'id'
         },
+        primaryKey: true
     },
     userId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'User',
+            model: 'Users',
             key: 'id'
         },
-        allowNull: true
+        primaryKey: true
     },
     indexes: [
         {

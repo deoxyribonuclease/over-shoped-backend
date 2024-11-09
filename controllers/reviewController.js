@@ -24,11 +24,11 @@ const getReviewsByUser = async (req, res) => {
 const getReviewByUserAndProduct = async (req, res) => {
     const { userId, productId } = req.params;
     try {
-        const review = await reviewService.getReviewByUserAndProduct(userId, productId);
+        const review = await reviewService.getByUserAndProduct(userId, productId);
         if (review) {
             res.status(200).json(review);
         } else {
-            res.status(404).json({ error: 'Review not found'});
+            res.status(404).json({ error: 'Review not found1'});
         }
     } catch (error) {
         res.status(500).json({error: `Server error: ${error.message}`});
@@ -42,7 +42,7 @@ const getReview = async (req, res) => {
         if (review) {
             res.status(200).json(review);
         } else {
-            res.status(404).json({ error: 'Review not found'});
+            res.status(404).json({ error: 'Review not found2'});
         }
     } catch (error) {
         res.status(500).json({error: `Server error: ${error.message}`});
@@ -68,14 +68,14 @@ const updateReviewByUserAndProduct = async (req, res) => {
     const { userId, productId } = req.params;
     const { text, rating } = req.body;
     try {
-        const updatedReview = reviewService.updateByUserAndProduct(userId, productId, {
+        const updatedReview = await reviewService.updateByUserAndProduct(userId, productId, {
             text,
             rating
         });
         if (updatedReview) {
-            res.status(200).json(updateReview);
+            res.status(200).json(updatedReview);
         } else {
-            res.status(404).json({ error: 'Review not found'});
+            res.status(404).json({ error: 'Review not found3'});
         }
     } catch (error) {
         res.status(500).json({ error: `Failed to update review: ${error.message}` });
@@ -83,12 +83,12 @@ const updateReviewByUserAndProduct = async (req, res) => {
 };
 
 const deleteReviewByUserAndProduct = async (req, res) => {
-    const { id } = req.params;
+    const { userId, productId } = req.params;
     try {
-        if (await reviewService.del(id)) {
+        if (await reviewService.delByUserAndProduct(userId, productId)) {
             res.status(204).json();
         } else {
-            res.status(404).json({ error: 'Review not found' });
+            res.status(404).json({ error: 'Review not found4' });
         }
     }  catch (error) {
         res.status(500).json({ error: `Failed to delete review: ${error.message}` });
@@ -101,7 +101,7 @@ const deleteReview = async (req, res) => {
         if (await reviewService.del(id)) {
             res.status(204).json();
         } else {
-            res.status(404).json({ error: 'Review not found' });
+            res.status(404).json({ error: 'Review not found5' });
         }
     }  catch (error) {
         res.status(500).json({ error: `Failed to delete review: ${error.message}` });
