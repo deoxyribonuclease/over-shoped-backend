@@ -2,6 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('./db');
 const app = express();
+const { ip, port, session_secret } = require('./config');
+
+// app.use(session({
+//     secret: session_secret || "Neshtatna situation",
+//     resave: false,
+//     saveUninitialized: true,
+// }));
+
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(cors());
 
@@ -15,6 +25,8 @@ const reviewRoute = require('./routes/reviewRoutes');
 const favoriteRoute = require('./routes/favoriteRoutes');
 const shopRoute = require('./routes/shopRoutes');
 
+const searchRoute = require('./routes/searchRoutes');
+
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
 app.use('/products', productRoute);
@@ -23,6 +35,8 @@ app.use('/reviews', reviewRoute);
 app.use('/favorites', favoriteRoute);
 app.use('/shops', shopRoute);
 
+app.use('/search', searchRoute);
+  
 // remove { force : true } to cancel db flush
 sequelize.sync({ force: true })
     .then(() => {
@@ -37,7 +51,6 @@ app.get('/', (req, res) => {
 });
 
 // Start the server
-const { ip, port } = require('./config');
 app.listen(port, ip, () => {
     console.log(`Server is running on: ${ip}:${port}`);
 });

@@ -85,9 +85,6 @@ const getUserImage = async (req, res) => {
         if (!user) {
             res.status(404).json({ error: 'User not found' });
         }
-        else if (!user.image) {
-            res.status(404).json({ error: 'Image not found' });
-        }
         else {
             res.set('Content-Type', 'image/jpeg');
             res.send(user.image);

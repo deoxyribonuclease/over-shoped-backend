@@ -8,6 +8,7 @@ const Shop = sequelize.define('Shop', {
     },
     userId: {
         type: DataTypes.INTEGER,
+        allowNull: true,
         references: {
             model: 'Users',
             key: 'id'

@@ -7,7 +7,7 @@ const registerUser = async (req, res) => {
     const result = await authService.register(email, password);
     res.status(201).json(result);
   } catch (error) {
-    res.status(500).send(`Server error: ${error.message}`);
+    res.status(500).json(`Server error: ${error.message}`);
   }
 };
 
@@ -19,7 +19,7 @@ const loginUser = async (req, res) => {
   if (token) {
     res.status(200).json(token);
   } else {
-    res.status(500).send({ messag: "Pu-pu-puuu" });
+    res.status(500).json({ messag: "Pu-pu-puuu" });
   }
 };
 
@@ -47,9 +47,9 @@ router.post("/", async (req, res) => {
       const message = `${process.env.BASE_URL}/user/verify/${user.id}/${token.token}`;
       await sendEmail(user.email, "Verify Email", message);
   
-      res.send("An Email sent to your account please verify");
+      res.json("An Email sent to your account please verify");
     } catch (error) {
-      res.status(400).send("An error occured");
+      res.status(400).json("An error occured");
     }
   });
 
@@ -67,9 +67,9 @@ router.get("/verify/:id/:token", async (req, res) => {
       await User.updateOne({ _id: user._id, verified: true });
       await Token.findByIdAndRemove(token._id);
   
-      res.send("email verified sucessfully");
+      res.json("email verified sucessfully");
     } catch (error) {
-      res.status(400).send("An error occured");
+      res.status(400).json("An error occured");
     }
   });
 */

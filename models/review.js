@@ -23,7 +23,7 @@ const Review = sequelize.define('Review', {
         allowNull: false
     },
     rating: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
 });
