@@ -1,5 +1,9 @@
 const Shop = require('../models/shop');
 
+const getAll = async () => {
+  return await Shop.findAll();  
+};
+
 const get = async (id) => {
     return await Shop.findByPk(id);
 };
@@ -35,4 +39,4 @@ const del = async (id) => {
     return false;
 };
 
-module.exports = { get, getByUser, add, update, del };
+module.exports = { getAll, get, getByUser, add, update, del };

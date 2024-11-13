@@ -1,5 +1,13 @@
-const e = require('express');
 const shopService = require('../services/shopService');
+
+const getAllShops = async (req, res) => {
+    try {
+        const shops = await shopService.getAll();
+        res.status(200).json(shops);
+    } catch (error) {
+        res.status(500).json({ error: `Failed to get shops: ${error.message}` });
+    }
+};
 
 const getShop = async (req, res) => {
     const { id } = req.params;
@@ -73,4 +81,4 @@ const deleteShop = async (req, res) => {
     }
 };
 
-module.exports = { getShop, getShopByUser, createShop, updateShop, deleteShop };
+module.exports = { getAllShops, getShop, getShopByUser, createShop, updateShop, deleteShop };

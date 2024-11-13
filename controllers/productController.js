@@ -96,4 +96,76 @@ const getProductImages = async (req, res) => {
     }
 };
 
-module.exports = { getAllProducts, getProduct, createProduct, updateProduct, deleteProduct, getProductImages };
+const getAllPropertiesProduct = async (req, res) => {
+    const { productId } = req.params;
+    try {
+        const properties = await productService.getProperties(productId);
+        res.status(200).json(properties);
+    } catch (error) {
+        res.status(500).json({ error: `Failed to retrieve product properties: ${error.message}` });
+    }
+};
+
+const getProductProperty = async (req, res) => {
+    const { productId, propertyId } = req.params;
+    try {
+        const property = await productService.getProperty(productId, propertyId);
+        if (property) {
+            res.status(200).json(property);
+        } else {
+            res.status(404).json({ error: 'Property not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: `Failed to retrieve product property: ${error.message}` });
+    }
+};
+
+const createProductProperty = async (req, res) => {
+    try {
+        const newProperty = await productService.addProperty(req.body);
+        res.status(200).json(newProperty);
+    } catch (error) {
+        res.status(500).json({ error: `Failed to create new product property: ${error.message}` });
+    }
+};
+
+const updateProductProperty = async (req, res) => {
+    const { productId, propertyId } = req.params;
+    try {
+        const updatedProperty = await productService.updateProperty(productId, propertyId, req.body);
+        if (updatedProperty) {
+            res.status(200).json(updatedProperty);
+        } else {
+            res.status(404).json({ error: 'Property not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: `Failed to update product property: ${error.message}` });
+    }
+};
+
+const deleteProductProperty = async (req, res) => {
+    const { productId, propertyId } = req.params;
+    try {
+        if (await productService.delProperty(productId, propertyId)) {
+            res.status(200).json();
+        } else {
+            res.status(404).json({ error: 'Property not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: `Failed to delete product property: ${error.message}` });
+    }
+};
+
+module.exports = {
+    getAllProducts,
+    getProduct, 
+    createProduct, 
+    updateProduct, 
+    deleteProduct, 
+    getProductImages, 
+    getAllPropertiesProduct, 
+    getProductProperty,
+    createProductProperty,
+    updateProductProperty,
+    deleteProductProperty
+};

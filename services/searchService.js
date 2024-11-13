@@ -81,4 +81,15 @@ const getProductsByFilters = async (shopId, categoryId, properties, priceRange, 
     return await Product.findAll(query);
 };
 
-module.exports = { getCategories, getCategoryProperties, getProductsByFilters };
+const getProductsByText = async (searchText) => {
+    return await Product.findAll({
+        where: {
+            [Op.or]: [
+                { name: { [Op.like]: `%${searchText}%` } },
+                { description: { [Op.like]: `%${searchText}%` } }
+            ]
+        }
+    });
+};
+
+module.exports = { getCategories, getCategoryProperties, getProductsByFilters, getProductsByText };
