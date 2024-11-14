@@ -34,7 +34,7 @@ const getCategoryProperties = async (categoryId) => {
     return result;
 };
 
-const getProductsByFilters = async (shopId, categoryId, properties, priceRange, ratingRange, page, pageSize) => {
+const getProductsByFilters = async (shopIds, categoryId, properties, priceRange, ratingRange, page, pageSize, orderBy) => {
     const whereConditions = {
         ...(priceRange && (priceRange.min !== null || priceRange.max !== null) && {
             price: {
@@ -50,13 +50,31 @@ const getProductsByFilters = async (shopId, categoryId, properties, priceRange, 
         }),
     };
 
-    // Only add property conditions if properties are provided
-    const propertyConditions = properties 
+    const propertyConditions = properties
         ? properties.map(prop => ({
             name: prop.name,
             content: { [Op.in]: prop.values },
         }))
         : [];
+
+    let order;
+    switch (orderBy) {
+        case 'price_asc':
+            order = [['price', 'ASC']];
+            break;
+        case 'price_desc':
+            order = [['price', 'DESC']];
+            break;
+        case 'rating_asc':
+            order = [['rating', 'ASC']];
+            break;
+        case 'rating_desc':
+            order = [['rating', 'DESC']];
+            break;
+        default:
+            order = [['price', 'ASC']];
+            break;
+    }
 
     const query = {
         where: whereConditions,
@@ -64,7 +82,7 @@ const getProductsByFilters = async (shopId, categoryId, properties, priceRange, 
             {
                 model: Shop,
                 required: true,
-                where: shopId ? { id: shopId } : {},
+                where: shopIds && shopIds.ids !== null ? { id: { [Op.in]: shopIds.ids } } : {},
             },
             {
                 model: Category,
@@ -75,10 +93,11 @@ const getProductsByFilters = async (shopId, categoryId, properties, priceRange, 
                 model: ProductProperty,
                 required: true,
                 where: { [Op.and]: propertyConditions },
-            }] : []), // Only include ProductProperty if properties exist
+            }] : []),
         ],
         limit: pageSize,
         offset: (page - 1) * pageSize,
+        order
     };
 
     return await Product.findAndCountAll(query);

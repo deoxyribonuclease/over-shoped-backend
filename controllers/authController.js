@@ -19,7 +19,7 @@ const loginUser = async (req, res) => {
   if (token) {
     res.status(200).json(token);
   } else {
-    res.status(500).json({ messag: "Pu-pu-puuu" });
+    res.status(500).json({ message: "Pu-pu-puuu" });
   }
 };
 

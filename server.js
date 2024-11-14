@@ -64,6 +64,10 @@ async function setUp() {
     await User.create({ email: 'test@example.com', password: 'testtest' });
     await Shop.create({ userId: 1, name: 'testShop', description: 'testdescripti', phoneNumber: '228', email: 'shop@example.com' });
 
+    await User.create({ email: 'test1@example.com', password: 'testtest' });
+    await Shop.create({ userId: 2, name: 'testShop1', description: 'testdescripti', phoneNumber: '228', email: 'shop@example.com' });
+
+
     await Product.create({ shopId: 1, name: 'Samsung I69', description: 'Nice phone', price: 14.48, categoryId: 1, rating: 4 });
 
     await ProductProperty.create({ categoryId: 1, productId: 1, name: 'Оперативна', content: '16gb' });
@@ -71,7 +75,7 @@ async function setUp() {
     await ProductProperty.create({ categoryId: 1, productId: 1, name: 'Сімок', content: '2' });
     await ProductProperty.create({ categoryId: 1, productId: 1, name: 'Вбудована', content: '256gb' });
 
-    await Product.create({ shopId: 1, name: 'AIphone 228', description: 'bad phone', price: 20.48, categoryId: 1, rating: 3 });
+    await Product.create({ shopId: 2, name: 'AIphone 228', description: 'bad phone', price: 20.48, categoryId: 1, rating: 3 });
 
     await ProductProperty.create({ categoryId: 1, productId: 2, name: 'Оперативна', content: '32gb' });
     await ProductProperty.create({ categoryId: 1, productId: 2, name: 'Діагональ', content: '6.4' });
