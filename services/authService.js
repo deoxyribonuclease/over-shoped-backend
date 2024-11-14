@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 const userService = require('../services/userService')
 const { jwtSecret, email, pass } = require('../config');
 
-const register = async (email, password) => {
+const register = async (email, password, name) => {
   try {
     const user = await userService.getByEmail(email);
     if (user) {
@@ -15,7 +15,7 @@ const register = async (email, password) => {
     const salt = await bcrypt.genSalt(10);
     const passwordHashed = await bcrypt.hash(password, salt);
 
-    await userService.add({ email: email, password: passwordHashed });
+    await userService.add({ email: email, password: passwordHashed, name: name});
 
     return { message: 'User registered successfully' };
   } catch (error) {

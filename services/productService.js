@@ -15,8 +15,9 @@ const get = async (id) => {
 };
 
 const add = async (productData) => {
-    const { shopId, categoryId, name, description, price, discountPercentage, images } = productData;
+    const {stock, shopId, categoryId, name, description, price, discountPercentage, images } = productData;
     return await Product.create({
+        stock,
         shopId,
         categoryId,
         name,

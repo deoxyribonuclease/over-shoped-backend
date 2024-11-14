@@ -32,14 +32,16 @@ const getProduct = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-    const { name, description, price, discountPercentage, images } = req.body;
+    const {stock, shopId, name, description, price, discountPercentage, images } = req.body;
     try {
         const newProduct = await productService.add({
+            stock,
+            shopId,
             name,
             description,
             price,
             discountPercentage,
-            images
+            images,
         });
         res.status(201).json(newProduct);
     } catch (error) {

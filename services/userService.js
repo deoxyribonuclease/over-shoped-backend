@@ -14,7 +14,7 @@ const getByEmail = async (email) => {
 };
 
 const add = async (userData) => {
-    const { name, surname, email, password, address, phone, image } = userData;
+    const { name, surname, email, password, address, phone, image} = userData;
     return await User.create({
         name,
         surname,
