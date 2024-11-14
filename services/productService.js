@@ -15,7 +15,7 @@ const get = async (id) => {
 };
 
 const add = async (productData) => {
-    const {stock, shopId, categoryId, name, description, price, discountPercentage, images } = productData;
+    const { shopId, categoryId, name, description, price, discountPercentage, stock, images, rating } = productData;
     return await Product.create({
         stock,
         shopId,
@@ -23,6 +23,7 @@ const add = async (productData) => {
         name,
         description,
         price,
+        rating,
         discountPercentage,
         images
     });
@@ -42,7 +43,7 @@ const update = async (id, productData) => {
         product.images = images || product.images;
         product.rating = rating || product.rating;
         await product.save();
-        return product;
+        return await product.reload();
     }
     return null;
 };

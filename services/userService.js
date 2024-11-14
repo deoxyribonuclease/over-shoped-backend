@@ -14,25 +14,30 @@ const getByEmail = async (email) => {
 };
 
 const add = async (userData) => {
-    const { name, surname, email, password, address, phone, image} = userData;
+    const { email, password, role, name, surname, image, verified, address, phone } = userData;
     return await User.create({
-        name,
-        surname,
         email,
         password,
-        address,
-        phone,
+        role,
+        name,
+        surname,
         image,
+        verified,
+        address,
+        phone
     });
 };
 
 const update = async (id, userData) => {
-    const { name, email, password, address, phone, image } = userData;
+    const { email, password, role, name, surname, image, verified, address, phone } = userData;
     const user = await User.findByPk(id);
     if (user) {
-        user.name = name || user.name;
         user.email = email || user.email;
         user.password = password || user.password;
+        user.role = role || user.role;
+        user.name = name || user.name;
+        user.surname = surname || user.surname;
+        user.verified = verified || user.verified;
         user.address = address || user.address;
         user.phone = phone || user.phone;
 

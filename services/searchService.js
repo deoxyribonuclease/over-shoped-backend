@@ -103,14 +103,16 @@ const getProductsByFilters = async (shopIds, categoryId, properties, priceRange,
     return await Product.findAndCountAll(query);
 };
 
-const getProductsByText = async (searchText) => {
+const getProductsByText = async (searchText, page, pageSize) => {
     return await Product.findAll({
         where: {
             [Op.or]: [
                 { name: { [Op.like]: `%${searchText}%` } },
                 { description: { [Op.like]: `%${searchText}%` } }
             ]
-        }
+        },
+        limit: pageSize,
+        offset: (page - 1) * pageSize
     });
 };
 

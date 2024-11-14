@@ -26,16 +26,18 @@ const getUser = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-    const { name, surname, email, password, address, phone } = req.body;
+    const { email, password, role, name, surname, verified, address, phone } = userData;
     const image = req.file ? req.file.buffer : null;
     try {
         const newUser = await userService.add({
             name,
             surname,
+            role,
             email,
             password,
             address,
             phone,
+            verified,
             image
         });
         res.status(201).json(newUser);
@@ -50,10 +52,10 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, password, address, phone } = req.body;
+    const { email, password, role, name, surname, verified, address, phone } = userData;
     const image = req.file ? req.file.buffer : null;
     try {
-        const updatedUser = await userService.update(id, { name, email, password, address, phone, image });
+        const updatedUser = await userService.update(id, { email, password, role, name, surname, verified, address, phone, image });
         if (updatedUser) {
             res.status(200).json(updatedUser);
         } else {
