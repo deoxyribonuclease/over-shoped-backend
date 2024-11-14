@@ -29,11 +29,19 @@ const getAllProperties = async (req, res) => {
 
 const getProductsFilters = async (req, res) => {
     const { shopId, categoryId, properties, priceRange, ratingRange } = req.body;
-    try {
-        const products = await searchService.getProductsByFilters(shopId, categoryId, properties, priceRange, ratingRange);
+    const page = parseInt(req.query.page) || 1; // default to page 1 if not provided
+    const pageSize = parseInt(req.query.pageSize) || 10; // default to 10 items per page if not provided
 
-        if (products && products.length > 0) {
-            res.status(200).json(products);
+    try {
+        const products = await searchService.getProductsByFilters(shopId, categoryId, properties, priceRange, ratingRange, page, pageSize);
+
+        if (products && products.rows.length > 0) {
+            res.status(200).json({
+                totalItems: products.count,
+                products: products.rows,
+                totalPages: Math.ceil(products.count / pageSize),
+                currentPage: page
+            });
         } else {
             res.status(404).json({ error: 'No products with such parameters' });
         }
@@ -41,6 +49,7 @@ const getProductsFilters = async (req, res) => {
         res.status(500).json({ error: `Server error: ${error.message}` });
     }
 };
+
 
 const getProductsByText = async (req, res) => {
     const { searchText } = req.params;
@@ -54,7 +63,7 @@ const getProductsByText = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ error: `Server error: ${error.message}` });
-    }
+    } 
 };
 
 module.exports = { getAllCategories, getAllProperties, getProductsFilters, getProductsByText };

@@ -10,8 +10,8 @@ router.get("/product/:id", reviewController.getReviewsByProduct);
 router
     .route("/:userId/:productId")
     .get(reviewController.getReviewByUserAndProduct)
-    .patch(reviewController.updateReviewByUserAndProduct)
-    .delete(reviewController.deleteReviewByUserAndProduct);
+    .patch(reviewController.updateReviewByUserAndProduct, reviewController.updateProductRating)
+    .delete(reviewController.deleteReviewByUserAndProduct, reviewController.updateProductRating);
 
 router.post(
     "/",

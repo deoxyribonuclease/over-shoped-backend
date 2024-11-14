@@ -50,7 +50,8 @@ const Product = sequelize.define('Product', {
     },
     rating: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: true
+        allowNull: true,
+        defaultValue: 0.0
     }
 });
 

@@ -34,7 +34,7 @@ const getCategoryProperties = async (categoryId) => {
     return result;
 };
 
-const getProductsByFilters = async (shopId, categoryId, properties, priceRange, ratingRange) => {
+const getProductsByFilters = async (shopId, categoryId, properties, priceRange, ratingRange, page, pageSize) => {
     const whereConditions = {
         ...(priceRange && (priceRange.min !== null || priceRange.max !== null) && {
             price: {
@@ -50,10 +50,13 @@ const getProductsByFilters = async (shopId, categoryId, properties, priceRange, 
         }),
     };
 
-    const propertyConditions = properties.map(prop => ({
-        name: prop.name,
-        content: { [Op.in]: prop.values },
-    }));
+    // Only add property conditions if properties are provided
+    const propertyConditions = properties 
+        ? properties.map(prop => ({
+            name: prop.name,
+            content: { [Op.in]: prop.values },
+        }))
+        : [];
 
     const query = {
         where: whereConditions,
@@ -68,17 +71,17 @@ const getProductsByFilters = async (shopId, categoryId, properties, priceRange, 
                 required: true,
                 where: categoryId ? { id: categoryId } : {},
             },
-            {
+            ...(propertyConditions.length > 0 ? [{
                 model: ProductProperty,
-                required: propertyConditions.length > 0,
-                where: {
-                    [Op.and]: propertyConditions,
-                },
-            },
+                required: true,
+                where: { [Op.and]: propertyConditions },
+            }] : []), // Only include ProductProperty if properties exist
         ],
+        limit: pageSize,
+        offset: (page - 1) * pageSize,
     };
 
-    return await Product.findAll(query);
+    return await Product.findAndCountAll(query);
 };
 
 const getProductsByText = async (searchText) => {

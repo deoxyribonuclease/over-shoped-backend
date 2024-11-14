@@ -58,10 +58,9 @@ const createReview = async (req, res, next) => {
       text,
       rating,
     });
-    if (newReview) {
-
-    } else {
+    if (!newReview) {
       res.status(409).json({ message: 'Review already exists' });
+      return;
     }
     req.review = newReview;
     req.productId = productId;
@@ -77,9 +76,10 @@ const updateProductRating = async (req, res) => {
   try {
     const reviews = await reviewService.getAllByProduct(productId);
     if (reviews.length === 0) {
+      await productService.update(productId, { rating: '0.0' });
       return res
         .status(200)
-        .json({ message: "No reviews to calculate rating" });
+        .json({ message: "No reviews available, rating set to 0.0" });
     }
 
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
@@ -99,7 +99,7 @@ const updateProductRating = async (req, res) => {
   }
 };
 
-const updateReviewByUserAndProduct = async (req, res) => {
+const updateReviewByUserAndProduct = async (req, res, next) => {
   const { userId, productId } = req.params;
   const { text, rating } = req.body;
   try {
@@ -111,11 +111,13 @@ const updateReviewByUserAndProduct = async (req, res) => {
         rating,
       }
     );
-    if (updatedReview) {
-      res.status(200).json(updatedReview);
-    } else {
+    if (!updatedReview) {
       res.status(404).json({ error: "Review not found" });
+      return;
     }
+    req.review = updatedReview;
+    req.productId = productId;
+    next();
   } catch (error) {
     res
       .status(500)
@@ -123,14 +125,16 @@ const updateReviewByUserAndProduct = async (req, res) => {
   }
 };
 
-const deleteReviewByUserAndProduct = async (req, res) => {
+const deleteReviewByUserAndProduct = async (req, res, next) => {
   const { userId, productId } = req.params;
   try {
-    if (await reviewService.delByUserAndProduct(userId, productId)) {
-      res.status(204).json();
-    } else {
+    if (!(await reviewService.delByUserAndProduct(userId, productId))) {
       res.status(404).json({ error: "Review not found" });
+      return;
     }
+    req.review = null;
+    req.productId = productId;
+    next();
   } catch (error) {
     res
       .status(500)

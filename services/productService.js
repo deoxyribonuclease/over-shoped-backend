@@ -28,7 +28,7 @@ const add = async (productData) => {
 };
 
 const update = async (id, productData) => {
-    const { shopId, categoryId, name, description, price, discountPercentage, stock, category, images, rating } = productData;
+    const { shopId, categoryId, name, description, price, discountPercentage, stock, images, rating } = productData;
     const product = await Product.findByPk(id);
     if (product) {
         product.categoryId = categoryId || product.categoryId;
