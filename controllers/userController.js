@@ -26,7 +26,7 @@ const getUser = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-    const { email, password, role, name, surname, verified, address, phone } = userData;
+    const { email, password, role, name, surname, verified, address, phone } = req.body;
     const image = req.file ? req.file.buffer : null;
     try {
         const newUser = await userService.add({
@@ -52,7 +52,7 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { email, password, role, name, surname, verified, address, phone } = userData;
+    const { email, password, role, name, surname, verified, address, phone } = req.body;
     const image = req.file ? req.file.buffer : null;
     try {
         const updatedUser = await userService.update(id, { email, password, role, name, surname, verified, address, phone, image });
