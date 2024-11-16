@@ -53,14 +53,7 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const { id } = req.params;
-    const { shopId, name, categoryId, description, price, discountPercentage, stock, rating } = req.body;
-      // Parse JSON fields if they were sent as FormData strings
-      let images;
-      try {
-          images = req.body.images ? JSON.parse(req.body.images) : undefined;
-      } catch (error) {
-          return res.status(400).json({ error: "Invalid images format" });
-      }
+    const { shopId, name, categoryId, description, price, discountPercentage, stock, rating, images } = req.body;
     try {
         const updatedProduct = await productService.update(id, {
             shopId,

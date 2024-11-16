@@ -8,6 +8,7 @@ const OrderItem = sequelize.define('OrderItem', {
       model: 'Product',
       key: 'id'
     },
+    onDelete: 'CASCADE'
   },
   totalPrice: {
     type: DataTypes.DECIMAL(10, 2)

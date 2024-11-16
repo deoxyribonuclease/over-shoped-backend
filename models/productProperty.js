@@ -7,14 +7,16 @@ const ProductProperty = sequelize.define('ProductProperty', {
         references: {
             model: 'Categories',
             key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
     },
     productId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'Products',
             key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
     },
     name: {
         type: DataTypes.STRING,

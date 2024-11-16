@@ -42,7 +42,8 @@ const Product = sequelize.define('Product', {
             model: 'Categories',
             key: 'id'
         },
-        allowNull: true
+        allowNull: true,
+        onDelete: 'CASCADE'
     },
     images: {
         type: DataTypes.JSON,

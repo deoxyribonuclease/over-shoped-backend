@@ -8,7 +8,8 @@ const Review = sequelize.define('Review', {
             model: 'Products',
             key: 'id'
         },
-        primaryKey: true
+        primaryKey: true,
+        onDelete: 'CASCADE'
     },
     userId: {
         type: DataTypes.INTEGER,
@@ -16,7 +17,8 @@ const Review = sequelize.define('Review', {
             model: 'Users',
             key: 'id'
         },
-        primaryKey: true
+        primaryKey: true,
+        onDelete: 'CASCADE'
     },
     text: {
         type: DataTypes.STRING,
