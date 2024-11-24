@@ -24,8 +24,9 @@ const productRoute = require('./routes/productRoutes');
 const reviewRoute = require('./routes/reviewRoutes');
 const favoriteRoute = require('./routes/favoriteRoutes');
 const shopRoute = require('./routes/shopRoutes');
-
 const searchRoute = require('./routes/searchRoutes');
+
+//const orderRoute = require('./routes/orderRoutes');
 
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
@@ -34,8 +35,9 @@ app.use('/products', productRoute);
 app.use('/reviews', reviewRoute);
 app.use('/favorites', favoriteRoute);
 app.use('/shops', shopRoute);
-
 app.use('/search', searchRoute);
+
+//app.use('/order', orderRoute);
 
 // test TO-DO refactor
 const Category = require('./models/category');

@@ -28,7 +28,7 @@ const getAllProperties = async (req, res) => {
 };
 
 const getProductsFilters = async (req, res) => {
-    let { shopIds, categoryId, properties, priceRange, ratingRange } = req.query;
+    let { shopIds, categoryId, properties, priceRange, ratingRange, searchText } = req.query;
    
     shopIds = shopIds ? JSON.parse(shopIds) : undefined;
     properties = properties ? JSON.parse(properties) : undefined;
@@ -39,7 +39,7 @@ const getProductsFilters = async (req, res) => {
     const pageSize = parseInt(req.query.pageSize) || 16;
     const orderBy = req.query.orderBy || 'price_asc';
     try {
-        const products = await searchService.getProductsByFilters(shopIds, categoryId, properties, priceRange, ratingRange, page, pageSize, orderBy);
+        const products = await searchService.getProductsByFilters(shopIds, categoryId, properties, priceRange, ratingRange, page, pageSize, orderBy, searchText);
 
         if (products && products.rows.length > 0) {
             res.status(200).json({

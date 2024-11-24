@@ -2,6 +2,14 @@ const { DataTypes } = require("sequelize");
 const sequelize = require('../db');
 
 const OrderItem = sequelize.define('OrderItem', {
+  orderId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Order',
+      key: 'id'
+    },
+    onDelete: 'CASCADE'
+  },
   productId: {
     type: DataTypes.INTEGER,
     references: {
@@ -19,3 +27,5 @@ const OrderItem = sequelize.define('OrderItem', {
     defaultValue: 1
   }
 });
+
+module.exports = OrderItem;

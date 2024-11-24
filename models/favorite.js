@@ -8,7 +8,7 @@ const Favorite = sequelize.define('Favorite', {
             model: 'Users',
             key: 'id'
         },
-        primaryKey: true,
+        allowNull: false,
         onDelete: 'CASCADE',
     },
     productId: {
@@ -17,9 +17,17 @@ const Favorite = sequelize.define('Favorite', {
             model: 'Products',
             key: 'id'
         },
-        primaryKey: true,
+        allowNull: false,
         onDelete: 'CASCADE',
     }
+}, {
+    timestamps: false, 
+    indexes: [
+        {
+            unique: true,
+            fields: ['userId', 'productId'],
+        },
+    ],
 });
 
 module.exports = Favorite;

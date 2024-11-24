@@ -31,3 +31,5 @@ const Order = sequelize.define('Order', {
         allowNull: true
     }
 });
+
+module.exports = Order;

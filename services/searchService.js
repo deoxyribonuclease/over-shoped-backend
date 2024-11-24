@@ -1,4 +1,3 @@
-const { Sequelize } = require('sequelize');
 const { Op } = require('sequelize');
 const Category = require('../models/category');
 const ProductProperty = require('../models/productProperty');
@@ -34,7 +33,7 @@ const getCategoryProperties = async (categoryId) => {
     return result;
 };
 
-const getProductsByFilters = async (shopIds, categoryId, properties, priceRange, ratingRange, page, pageSize, orderBy) => {
+const getProductsByFilters = async (shopIds, categoryId, properties, priceRange, ratingRange, page, pageSize, orderBy, searchText) => {
     const whereConditions = {
         ...(priceRange && (priceRange.min !== null || priceRange.max !== null) && {
             price: {
@@ -47,6 +46,12 @@ const getProductsByFilters = async (shopIds, categoryId, properties, priceRange,
                 ...(ratingRange.min !== null ? { [Op.gte]: ratingRange.min } : {}),
                 ...(ratingRange.max !== null ? { [Op.lte]: ratingRange.max } : {}),
             },
+        }),
+        ...(searchText &&  {
+            [Op.or]: [
+                { name: { [Op.like]: `%${searchText}%`}},
+                { description: { [Op.like]: `%${searchText}%`}},
+            ],
         }),
     };
 
