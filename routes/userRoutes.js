@@ -3,7 +3,6 @@ const multer = require('multer');
 const router = express.Router();
 
 const userController = require('../controllers/userController');
-const verifyToken = require('../middlewares/middleware');
 
 const upload = multer();
 
@@ -16,7 +15,6 @@ router.patch('/:id', upload.single('image'), userController.updateUser);
 router.delete('/:id', userController.deleteUser);
 
 router.get('/:id/image', userController.getUserImage);
-// router.get('/:id/image', verifyToken, userController.getUserImage);
 
 router.post('/', upload.single('image'), userController.createUser);
 

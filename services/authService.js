@@ -15,7 +15,7 @@ const register = async (email, password, name) => {
     const salt = await bcrypt.genSalt(10);
     const passwordHashed = await bcrypt.hash(password, salt);
 
-    await userService.add({ email: email, password: passwordHashed, name: name});
+    await userService.add({ email: email, password: passwordHashed, name: name });
 
     return { message: 'User registered successfully' };
   } catch (error) {
