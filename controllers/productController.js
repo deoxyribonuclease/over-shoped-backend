@@ -114,6 +114,20 @@ const getAllPropertiesProduct = async (req, res) => {
     }
 };
 
+const getProductPropertyById = async (req, res) => {
+    const { propertyId } = req.params;
+    try {
+        const property = await productService.getPropertyById(propertyId);
+        if (property) {
+            res.status(200).json(property);
+        } else {
+            res.status(404).json({ error: 'Property not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: `Failed to retrieve product property: ${error.message}` });
+    }
+};
+
 const getProductProperty = async (req, res) => {
     const { productId, propertyId } = req.params;
     try {
@@ -137,6 +151,20 @@ const createProductProperty = async (req, res) => {
     }
 };
 
+const updateProductPropertyById = async (req, res) => {
+    const { propertyId } = req.params;
+    try {
+        const updatedProperty = await productService.updatePropertyByid(propertyId, req.body);
+        if (updatedProperty) {
+            res.status(200).json(updatedProperty);
+        } else {
+            res.status(404).json({ error: 'Property not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: `Failed to update product property: ${error.message}` });
+    }
+};
+
 const updateProductProperty = async (req, res) => {
     const { productId, propertyId } = req.params;
     try {
@@ -148,6 +176,19 @@ const updateProductProperty = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ error: `Failed to update product property: ${error.message}` });
+    }
+};
+
+const deleteProductPropertyById = async (req, res) => {
+    const { propertyId } = req.params;
+    try {
+        if (await productService.delPropertyById(propertyId)) {
+            res.status(200).json();
+        } else {
+            res.status(404).json({ error: 'Property not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: `Failed to delete product property: ${error.message}` });
     }
 };
 
@@ -172,8 +213,11 @@ module.exports = {
     deleteProduct,
     getProductImages,
     getAllPropertiesProduct,
+    getProductPropertyById,
     getProductProperty,
     createProductProperty,
+    updateProductPropertyById,
     updateProductProperty,
+    deleteProductPropertyById,
     deleteProductProperty
 };

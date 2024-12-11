@@ -69,6 +69,10 @@ const getProperties = async (id) => {
     return await ProductProperty.findAll({ where: { productId: id } });
 };
 
+const getPropertyById = async (propertyId) => {
+    return await ProductProperty.findOne({ where: { id: propertyId } });
+}
+
 const getProperty = async (productId, propertyId) => {
     return await ProductProperty.findOne({ where: { id: propertyId, productId: productId } });
 }
@@ -83,6 +87,20 @@ const addProperty = async (formData) => {
     });
 }
 
+const updatePropertyByid = async (propertyId, formData) => {
+    const { productId, categoryId, name, content } = formData;
+    const property = await ProductProperty.findOne({ where: { id: propertyId } });
+    if (property) {
+        property.categoryId = categoryId || property.categoryId;
+        property.productId = productId || property.productId;
+        property.name = name || property.name;
+        property.content = content || property.content;
+        await property.save();
+        return property;
+    }
+    return null;
+}
+
 const updateProperty = async (productId, propertyId, formData) => {
     const { categoryId, name, content } = formData;
     const property = await ProductProperty.findOne({ where: { productId: productId, id: propertyId } });
@@ -95,6 +113,15 @@ const updateProperty = async (productId, propertyId, formData) => {
         return property;
     }
     return null;
+}
+
+const delPropertyById = async (propertyId) => {
+    const property = await ProductProperty.findOne({ where: { id: propertyId } });
+    if (property) {
+        await property.destroy();
+        return true;
+    }
+    return false;
 }
 
 const delProperty = async (productId, propertyId) => {
@@ -114,8 +141,11 @@ module.exports = {
     del,
     getImages,
     getProperties,
+    getPropertyById,
     getProperty,
     addProperty,
+    updatePropertyByid,
     updateProperty,
+    delPropertyById,
     delProperty
 };

@@ -18,6 +18,11 @@ router.get('/:id/images', productController.getProductImages);
 router.get('/properties/:productId', productController.getAllPropertiesProduct);
 router.post('/properties/', productController.createProductProperty);
 
+router.route('/property/:propertyId')
+    .get(productController.getProductPropertyById)
+    .post(productController.updateProductPropertyById)
+    .delete(productController.deleteProductPropertyById);
+
 router.route('/properties/:productId/:propertyId')
     .get(productController.getProductProperty)
     .patch(productController.updateProductProperty)

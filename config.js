@@ -20,5 +20,4 @@ module.exports = {
   baseUrl: BASE_URL,
   email: process.env.EMAIL,
   pass: process.env.PASS,
-  session_secret: process.env.SESSION_SECRET
 };
